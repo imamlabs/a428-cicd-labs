@@ -5,9 +5,14 @@ pipeline {
             args '-p 3000:3000' 
         }
     }
+    options {
+        timeout(time: 5, unit: 'MINUTES')
+        heartbeatCheckInterval(30)
+    }
     stages {
         stage('Build') { 
             steps {
+                env.SHELL = '/bin/bash'
                 sh 'npm install'
             }
         }
