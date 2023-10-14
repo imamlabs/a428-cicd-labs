@@ -16,10 +16,17 @@ pipeline {
                 sh './jenkins/scripts/test.sh' 
             }
         }
-        stage('Deliver') {
+        stage('Manual Approval'){
+            steps{
+                //menunggu persetujuan secara manual
+                input message:'Lanjut ke tahap Deploy?'
+            }
+        }
+        stage('Deploy') {
             steps {
                 sh './jenkins/scripts/deliver.sh'
-                input message: 'Finished using the website? (Click "Proceed" to continue)'
+                //user bisa tes aplikasi hanya 1 menit
+                sh 'sleep 1m'
                 sh './jenkins/scripts/kill.sh'
             }
         }
